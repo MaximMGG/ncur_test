@@ -18,3 +18,13 @@ window: window.o
 window.o: window.c
 	gcc -c window.o window.c
 
+window2: window2.o
+	gcc -o window2 window2.o -lncurses
+window2.o: window2.c
+	gcc -c window2.o window2.c
+
+color: color.o
+	gcc -o color color.o -lncurses
+color.o: color.c
+	gcc -c color.o color.c
+

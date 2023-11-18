@@ -38,8 +38,20 @@ mouse: mouse.o
 mouse.o: mouse.c
 	gcc -c mouse.o mouse.c
 
+exit: exit.o
+	gcc -o exit exit.o -lncurses
+exit.o: exit.c
+	gcc -c exit.o exit.c
 
+symbols: symbols.o
+	gcc -o symbols symbols.o -lncurses
+symbols.o: symbols.c
+	gcc -c symbols.o symbols.c
 
+panel: panel.o
+	gcc -o panel panel.o -lncurses -lpanel
+panel.o: panel.c
+	gcc -c panel.o panel.c
 
 
 

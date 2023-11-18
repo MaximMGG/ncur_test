@@ -54,10 +54,38 @@ int main() {
             case 10:
                 choice = highlight; 
                 break;
+            default:
+                mvprintw(24, 0, "Character pressed is = %3d Hopefully it can be printed as '%c'", c, c);
+                refresh();
                 break;
         }
+        print_menu(menu, highlight);
+        if (choice != 0)
+            break;
     }
-
-
+    mvprintw(23, 0, "You choice %d with choice string %s\n", choice, choices[choice - 1]);
+    clrtoeol();
+    refresh();
+    endwin();
     return 0;
+}
+
+
+
+void print_menu(WINDOW *menu, int highlight) {
+    int x, y, i;
+    x = 2;
+    y = 2;
+    box(menu, 0, 0);
+    for(i = 0; i < n_choices; ++i) {
+        if (highlight == i + 1) {
+            wattron(menu, A_REVERSE);
+            mvwprintw(menu, y, x, "%s", choices[i]);
+            wattroff(menu, A_REVERSE);
+        } else {
+            mvwprintw(menu, y, x, "%s", choices[i]);
+        }
+        ++y;
+    }
+    wrefresh(menu);
 }

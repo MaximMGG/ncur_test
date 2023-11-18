@@ -28,3 +28,20 @@ color: color.o
 color.o: color.c
 	gcc -c color.o color.c
 
+key: key.o
+	gcc -o key key.o -lncurses
+key.o: key.c
+	gcc -c key.o key.c
+
+mouse: mouse.o
+	gcc -o mouse mouse.o -lncurses
+mouse.o: mouse.c
+	gcc -c mouse.o mouse.c
+
+
+
+
+
+
+
+

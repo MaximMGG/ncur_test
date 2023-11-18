@@ -24,50 +24,69 @@ void str_copy(char *target, char *buf) {
     }
 }
 
+char **get_content_from_dir(char *path, int *size) {
+    char **content = malloc(sizeof(char *) * (*size));
+    DIR *dir = opendir(path);
+
+    struct dirent *d;
+    int i = 0;
+    while((d = readdir(dir)) != NULL) {
+        if (i >= *size) {
+            *size <<= 1;
+            content = realloc(content, sizeof(char *) * (*size));
+        } 
+        content[i] = malloc(sizeof(char) * len(d->d_name));
+        str_copy(content[i], d->d_name);
+        i++;
+    }
+    *size = i;
+    return content;
+}
+
+void print_in_window_dir() {
+    int size = 20;
+    char **content = get_content_from_dir("/home/maximhrunenko/", &size);
+
+    for(int i = 0; i < size; i++) {
+        mvprintw(i + 1, 2, "%s", content[i]);
+    }
+}
+
+
 int main() {
+    int y, x;
     int ch;
 
     initscr();
     raw();
+    cbreak();
     keypad(stdscr, TRUE);
-    noecho();
-    
-    DIR *dir = opendir("/home/maximhrunenko/");
+    curs_set(0);
+    getmaxyx(stdscr, y, x);
+    box(stdscr, 0, 0);
 
-    struct dirent *d;
-    char ** dir_info= malloc(sizeof(char *) * 20);
-    int i = 0;
-
-    while((d = readdir(dir)) != NULL) {
-        dir_info[i] = malloc(sizeof(char) * len(d->d_name));
-        str_copy(dir_info[i], d->d_name);
-        i++;
-    }
-
-    for(int j = 0; j < i; j++) {
-        mvprintw(j, 0, "%s", dir_info[j]);
-    }
-
-
-    printw("Type any character to see it in bold\n");
-    ch = getch();
-    
-    if (ch == KEY_F(1)) {
-        printw("F1 key pressed");
-    } else {
-        printw("The pressed key is : ");
-        attron(A_BOLD);
-        printw("%c", ch);
-        attroff(ch);
-    }
-    addch(ch | A_BOLD | A_UNDERLINE);
-    closedir(dir);
-    free(dir_info);
-    free(d);
-
+    print_in_window_dir();
+    char curs = '>';
+    int curs_y = 1;
+    int curs_x = 1;
+    mvaddch(curs_y, curs_x, curs);
     refresh();
-    getch();
-    endwin();
 
+    while((ch = getch()) != KEY_F(1)) {
+        switch(ch) {
+            case KEY_DOWN:
+                if (curs_y == y) break;
+                mvaddch(curs_y++, curs_x, ' ');
+                mvaddch(curs_y, curs_x, curs);
+                break;
+            case KEY_UP:
+                if (curs_y == 1) break;
+                mvaddch(curs_y--, curs_x, ' ');
+                mvaddch(curs_y, curs_x, curs);
+                break;
+        }
+        refresh();
+    }
+    endwin();
     return 0;
 }

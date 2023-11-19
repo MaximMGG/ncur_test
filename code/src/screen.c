@@ -27,7 +27,7 @@ void moveCursDown(W_WIN *win) {
     if (win->cursory >= win->maxy - 1) {
         return;
     }
-    if (win->cursory >= win->show_to - 1) {
+    if (win->cursory > win->show_to) {
         return;
     }
 
@@ -75,7 +75,7 @@ W_WIN *initMainScreen(a_list *dir) {
 
 void printDir(W_WIN *win) {
     for(int i = win->show_from, j = 1; i <= win->show_to; i++, j++) {
-        mvwprintw(win->win, j, 1, "%s", (char *)al_get(win->dir, NULL, i));
+        mvwprintw(win->win, j, 2, "%s", (char *)al_get(win->dir, NULL, i));
     }
 }
 

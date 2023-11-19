@@ -15,6 +15,7 @@ typedef struct w_win {
     int show_from, show_to;
     int cursory;
     int cursorx;
+    char *cur_dir;
 }W_WIN;
 
 

@@ -13,24 +13,23 @@ int main() {
     char *pwd = getcwd(pwd, 200);
     int ch;
 
-    int x = 0, y = 0, maxx, maxy;
     initscr();
     raw();
     cbreak();
     keypad(stdscr, TRUE);
     curs_set(0);
-    getmaxyx(stdscr, y, x);
-    W_WIN *main_win = malloc(sizeof(*main_win));
-    main_win->win = stdscr;
-    main_win->maxy = maxy;
-    main_win->maxx = maxx;
-    main_win->dir = getContentFromDir(pwd);
+
+    W_WIN *main = initMainScreen(getContentFromDir(pwd));
 
     while((ch = getch()) != KEY_F(1)) {
         switch(ch) {
             case KEY_UP:
+                moveCursUp(main);
+                showCreen(main);
                 break;
             case KEY_DOWN:
+                moveCursDown(main);
+                showCreen(main);
                 break;
             case KEY_ENTER:
                 break;

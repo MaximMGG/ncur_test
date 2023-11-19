@@ -17,3 +17,5 @@ $(OBJ_DR)%.o: $(SRC_DR)%.c
 clean:
 	rm $(OBJ_DR)*.o $(MAIN)
 
+debug:
+	$(CC) $(SRC) -lar_list -lncurses -g

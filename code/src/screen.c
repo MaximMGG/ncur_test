@@ -18,6 +18,9 @@ void moveCursUp(W_WIN *win) {
             win->show_to--;
             printDir(win);
             return;
+        } else {
+            mvwaddch(win->win, win->cursory, win->cursorx, SPACE);
+            mvwaddch(win->win, --win->cursory, win->cursorx, CURS);
         } 
     }
      
@@ -36,7 +39,11 @@ void moveCursDown(W_WIN *win) {
         mvwaddch(win->win, ++win->cursory, win->cursorx, CURS);
         return;
     } else {
-        if (win->cursory >= win->maxy - 9) {
+        if (win->cursory > win->maxy - 9) {
+            if (win->show_to >= win->dir->len) {
+                mvwaddch(win->win, win->cursory, win->cursorx, SPACE);
+                mvwaddch(win->win, ++win->cursory, win->cursorx, CURS);
+            }
             win->show_to++;
             win->show_from++;
             printDir(win);
@@ -80,4 +87,10 @@ void printDir(W_WIN *win) {
 }
 
 
+void restartWin(W_WIN *win) {
+    wclear(win->win);
+    wrefresh(win->win);
+    box(win->win, 0, 0);
+    mvwaddch(win->win, 1, 1, CURS);
+}
 

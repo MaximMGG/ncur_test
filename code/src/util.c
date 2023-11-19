@@ -2,7 +2,7 @@
 
 
 char *concatString(char *target, char *buffer, char symbol) {
-    char *tmp = malloc(sizeof(char) * strlen(target) + strlen(buffer));
+    char *tmp = malloc(sizeof(char) * (strlen(target) + strlen(buffer)));
     int i = 0, j = 0;
 
     for(;;i++) {
@@ -27,7 +27,22 @@ char *concatString(char *target, char *buffer, char symbol) {
 
 
 char *catStringFromEnd(char *buf, char symbol) {
+    int count = 0;
+    for(int i = 0; ; i++) {
+        if (buf[i] == symbol) count++;
+        if (buf[i] == '\0') break;
+    }
 
+    for(int i = 0; ; i++) {
+        if(buf[i] == symbol) count--;
+        if (count == 0) {
+            buf[i] = '\0';
+            break;
+        }
+
+    }
+
+    return buf;
 }
 
 

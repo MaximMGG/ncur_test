@@ -1,6 +1,6 @@
 #include <ncurses.h>
 #include <stdio.h>
-#include <ar_list.h>
+#include "../headers/ar_list.h"
 #include <unistd.h>
 #include "../headers/screen.h"
 #include "../headers/dirwork.h"
@@ -26,7 +26,7 @@ int main() {
     keypad(stdscr, TRUE);
     curs_set(0);
 
-    W_WIN *main = initMainScreen(getContentFromDir(pwd));
+    W_WIN *main = initMainScreen(getContentFromDir(NULL, pwd));
     main->cur_dir = malloc(sizeof(char) * strlen(pwd));
     strcpy(main->cur_dir, pwd);
     printDir(main);
@@ -72,7 +72,7 @@ void openDir(W_WIN *win) {
     char *new_dir;
     if (win->dir->len > win->maxy) {
         if (win->show_from == 0) {
-           new_dir = al_get(win->dir, NULL, win->cursory - 1); 
+            new_dir = al_get(win->dir, NULL, win->cursory - 1); 
         } else {
             new_dir = al_get(win->dir, NULL, win->cursory - 1 - win->show_to);
         }
@@ -81,7 +81,7 @@ void openDir(W_WIN *win) {
     }
 
     win->cur_dir = concatString(win->cur_dir, new_dir, '/');
-    a_list *buf = getContentFromDir(new_dir);
+    a_list *buf = getContentFromDir(win->dir, new_dir);
     if (buf == NULL) {
         start_color();
         init_pair(1, COLOR_RED, COLOR_BLACK);
@@ -89,7 +89,7 @@ void openDir(W_WIN *win) {
         mvwprintw(win->win, 3, 20, "This is not a dirrectory!!!");
         sleep(500);
         attroff(COLOR_PAIR(1) | A_BLINK);
-    }
+    } 
     win->dir = buf;
     restartWin(win);
     win->cursory = 1;
@@ -99,6 +99,7 @@ void openDir(W_WIN *win) {
     } else {
         win->show_to = win->dir->len - 1;
     }
+
     printDir(win);
 }
 
@@ -114,7 +115,7 @@ void closeDir(W_WIN *win) {
         attroff(COLOR_PAIR(1) | A_BLINK);
     }
     strcpy(win->cur_dir, new_dir);
-    a_list *buf = getContentFromDir(new_dir);
+    a_list *buf = getContentFromDir(win->dir, new_dir);
     win->dir = buf;
     restartWin(win);
     win->cursory = 1;

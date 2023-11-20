@@ -3,8 +3,13 @@
 
 
 
-a_list *getContentFromDir(char *path) {
-    a_list *content = al_create(STRING, false, 0);
+a_list *getContentFromDir(a_list *buf, char *path) {
+        a_list *content;
+    if (buf == NULL) {
+        content = al_create(STRING, false, 0);
+    } else {
+        content = al_reset(buf);
+    }
 
     DIR *dir = opendir(path);
     struct dirent *ddir;

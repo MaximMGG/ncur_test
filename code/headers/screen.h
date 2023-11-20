@@ -1,5 +1,5 @@
 #include <ncurses.h>
-#include <ar_list.h>
+#include "ar_list.h"
 
 
 #define CURS '>'

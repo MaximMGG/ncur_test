@@ -45,7 +45,7 @@ int main() {
                 moveCursDown(main);
                 showCreen(main);
                 break;
-            case KEY_ENTER:
+            case 'e':
                 //TODO (maxim) rewrite this for working not only for dirrectories
                 openDir(main);
                 showCreen(main);
@@ -73,7 +73,11 @@ void openDir(W_WIN *win) {
     if (win->dir->len > win->maxy) {
         if (win->show_from == 0) {
            new_dir = al_get(win->dir, NULL, win->cursory - 1); 
+        } else {
+            new_dir = al_get(win->dir, NULL, win->cursory - 1 - win->show_to);
         }
+    } else {
+        new_dir = al_get(win->dir, NULL, win->cursory - 1); 
     }
 
     win->cur_dir = concatString(win->cur_dir, new_dir, '/');

@@ -11,7 +11,7 @@ a_list * al_create(DATA_TYPE d_type, boolean distinct, unsigned int struct_size)
     list->len = 0;
     list->struct_size = struct_size;
 
-    list->value = malloc(sizeof(void *) * list->max_size);
+    list->value = (void **) malloc(sizeof(void *) * list->max_size);
 
     if (d_type != STRING && d_type != STRUCT) {
         for(int i = 0; i < list->max_size; i++) {

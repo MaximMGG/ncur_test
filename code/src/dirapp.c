@@ -81,7 +81,7 @@ void openDir(W_WIN *win) {
     }
 
     win->cur_dir = concatString(win->cur_dir, new_dir, '/');
-    a_list *buf = getContentFromDir(win->dir, new_dir);
+    a_list *buf = getContentFromDir(win->dir, win->cur_dir);
     if (buf == NULL) {
         start_color();
         init_pair(1, COLOR_RED, COLOR_BLACK);

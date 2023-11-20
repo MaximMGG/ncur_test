@@ -39,8 +39,9 @@ char *catStringFromEnd(char *buf, char symbol) {
             buf[i] = '\0';
             break;
         }
-
     }
+
+    buf = realloc(buf, sizeof(char) * strlen(buf));
 
     return buf;
 }

@@ -61,7 +61,12 @@ void showCreen(W_WIN *win) {
 
 W_WIN *initMainScreen(a_list *dir) {
     W_WIN *main = malloc(sizeof(*main));
-    main->win = stdscr;
+    int maxy, maxx;
+    getmaxyx(stdscr, maxy, maxx);
+    WINDOW *main_win = newwin(maxy - 3, maxx, 3, 0);
+
+
+    main->win = main_win;
     getmaxyx(main->win, main->maxy, main->maxx);
     main->dir = dir; 
     main->cursory = 1;
@@ -92,5 +97,14 @@ void restartWin(W_WIN *win) {
     wrefresh(win->win);
     box(win->win, 0, 0);
     mvwaddch(win->win, 1, 1, CURS);
+}
+
+
+void showInfoScreen() {
+    int maxx = getmaxx(stdscr);
+    WINDOW *info = newwin(3, maxx, 0, 0);
+    mvwaddstr(info, 1, 0, "Type F1 for exit");
+    box(info, 0, 0);
+    wrefresh(info);
 }
 

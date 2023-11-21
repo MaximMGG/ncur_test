@@ -1,5 +1,5 @@
 #include <ncurses.h>
-#include "ar_list.h"
+#include <ar_list.h>
 
 
 #define CURS '>'
@@ -29,3 +29,5 @@ W_WIN *initMainScreen(a_list *dir);
 void printDir(W_WIN *win);
 
 void restartWin(W_WIN *win);
+
+void showInfoScreen();

@@ -14,6 +14,10 @@ a_list *getContentFromDir(a_list *buf, char *path) {
     DIR *dir = opendir(path);
     struct dirent *ddir;
 
+    if (dir == NULL) {
+        return NULL;
+    }
+
     while((ddir = readdir(dir)) != NULL) {
         al_add(content, ddir->d_name, STRING);
     }

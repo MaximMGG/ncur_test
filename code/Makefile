@@ -9,7 +9,7 @@ SRC = $(wildcard $(SRC_DR)*.c)
 OBJ = $(patsubst $(SRC_DR)%.c, $(OBJ_DR)%.o, $(SRC))
 
 $(MAIN): $(OBJ) 
-	$(CC) $(FLAGS) -o $(MAIN) $(OBJ) -lncurses -lpanel
+	$(CC) $(FLAGS) -o $(MAIN) $(OBJ) -lncurses -lpanel -lar_list
 
 $(OBJ_DR)%.o: $(SRC_DR)%.c 
 	$(CC) -c $^ -o $@

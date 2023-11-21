@@ -33,6 +33,13 @@ char *catStringFromEnd(char *buf, char symbol) {
         if (buf[i] == '\0') break;
     }
 
+    if (count == 1) {
+        buf = realloc(buf, sizeof(char) * 2);
+        buf[0] = '/';
+        buf[1] = '\0';
+        return buf;
+    }
+
     for(int i = 0; ; i++) {
         if(buf[i] == symbol) count--;
         if (count == 0) {

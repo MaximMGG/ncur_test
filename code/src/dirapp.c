@@ -1,6 +1,6 @@
+#include <ar_list.h>
 #include <ncurses.h>
 #include <stdio.h>
-#include "../headers/ar_list.h"
 #include <unistd.h>
 #include "../headers/screen.h"
 #include "../headers/dirwork.h"
@@ -13,27 +13,29 @@ void closeDir(W_WIN *win);
 
 
 int main() {
-    getchar();
-
     char *user_login = getlogin();
     char *pwd = getcwd(pwd, 200);
     int ch;
 
     initscr();
+
     raw();
     cbreak();
     noecho();
-    keypad(stdscr, TRUE);
     curs_set(0);
 
     W_WIN *main = initMainScreen(getContentFromDir(NULL, pwd));
+    keypad(main->win, TRUE);
+
     main->cur_dir = malloc(sizeof(char) * strlen(pwd));
     strcpy(main->cur_dir, pwd);
     printDir(main);
     showCreen(main);
+    showInfoScreen();
     mvwaddch(main->win, 1, 1, CURS);
+    wrefresh(main->win);
 
-    while((ch = getch()) != KEY_F(1)) {
+    while((ch = wgetch(main->win)) != KEY_F(1)) {
         switch(ch) {
             case 'k':
             case KEY_UP:
@@ -45,7 +47,7 @@ int main() {
                 moveCursDown(main);
                 showCreen(main);
                 break;
-            case 'e':
+            case '\n':
                 //TODO (maxim) rewrite this for working not only for dirrectories
                 openDir(main);
                 showCreen(main);
@@ -80,17 +82,21 @@ void openDir(W_WIN *win) {
         new_dir = al_get(win->dir, NULL, win->cursory - 1); 
     }
 
-    win->cur_dir = concatString(win->cur_dir, new_dir, '/');
-    a_list *buf = getContentFromDir(win->dir, win->cur_dir);
+    if (!strcmp(new_dir, "..")) {
+        closeDir(win);
+        return;
+    }
+
+    new_dir = concatString(win->cur_dir, new_dir, '/');
+    a_list *buf = getContentFromDir(win->dir, new_dir);
     if (buf == NULL) {
-        start_color();
-        init_pair(1, COLOR_RED, COLOR_BLACK);
-        attron(COLOR_PAIR(1) | A_BLINK);
-        mvwprintw(win->win, 3, 20, "This is not a dirrectory!!!");
-        sleep(500);
-        attroff(COLOR_PAIR(1) | A_BLINK);
+        return;
     } 
+
     win->dir = buf;
+    free(win->cur_dir);
+    win->cur_dir = new_dir;
+
     restartWin(win);
     win->cursory = 1;
     win->show_from = 0;
@@ -116,6 +122,7 @@ void closeDir(W_WIN *win) {
     }
     strcpy(win->cur_dir, new_dir);
     a_list *buf = getContentFromDir(win->dir, new_dir);
+
     win->dir = buf;
     restartWin(win);
     win->cursory = 1;

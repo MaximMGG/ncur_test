@@ -29,5 +29,7 @@ W_WIN *initMainScreen(a_list *dir);
 void printDir(W_WIN *win);
 
 void restartWin(W_WIN *win);
-
+//showing info screen with hot keys info
 void showInfoScreen();
+//showing all hot keys
+WINDOW *showKeysInfo();

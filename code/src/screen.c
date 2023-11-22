@@ -103,8 +103,24 @@ void restartWin(W_WIN *win) {
 void showInfoScreen() {
     int maxx = getmaxx(stdscr);
     WINDOW *info = newwin(3, maxx, 0, 0);
-    mvwaddstr(info, 1, 0, "Type F1 for exit");
+    mvwaddstr(info, 1, 1, "Type F1 for exit; Type \"i\" for getting key bindings help");
     box(info, 0, 0);
     wrefresh(info);
+}
+
+
+WINDOW *showKeysInfo() {
+    WINDOW *hot_key = newwin(10, 60, 15, 60);
+    box(hot_key, 0, 0);
+
+    mvwaddstr(hot_key, 1, 1, "F1 - exit.");
+    mvwaddstr(hot_key, 2, 1, "b - close dir.");
+    mvwaddstr(hot_key, 3, 1, "Enter - open dir/file.");
+    mvwaddstr(hot_key, 4, 1, "j/down_arrow - move down");
+    mvwaddstr(hot_key, 5, 1, "k/up_arrow - move up");
+
+    wrefresh(hot_key);
+
+    return hot_key;
 }
 

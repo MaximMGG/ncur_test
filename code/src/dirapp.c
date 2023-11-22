@@ -62,6 +62,15 @@ int main() {
             //(TODO) (Maxim) here will be some command line
             case ':':
                 break;
+            case 'i': {
+                WINDOW *hot_key = showKeysInfo();
+                wgetch(hot_key);
+                delwin(hot_key);
+                wclear(main->win);
+                wrefresh(main->win);
+                showCreen(main);
+                break;
+                }
         }
     }
 

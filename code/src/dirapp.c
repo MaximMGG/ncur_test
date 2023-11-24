@@ -5,6 +5,7 @@
 #include "../headers/screen.h"
 #include "../headers/dirwork.h"
 #include "../headers/util.h"
+#include "../headers/help.h"
 
 
 
@@ -63,11 +64,9 @@ int main() {
             case ':':
                 break;
             case 'i': {
-                WINDOW *hot_key = showKeysInfo();
-                wgetch(hot_key);
-                delwin(hot_key);
-                wclear(main->win);
-                wrefresh(main->win);
+                showHelp();
+                restartWin(main);
+                printDir(main);
                 showCreen(main);
                 break;
                 }

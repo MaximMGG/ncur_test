@@ -97,6 +97,8 @@ void restartWin(W_WIN *win) {
     wrefresh(win->win);
     box(win->win, 0, 0);
     mvwaddch(win->win, 1, 1, CURS);
+    win->cursorx = 1;
+    win->cursory = 1;
 }
 
 

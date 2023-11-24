@@ -15,3 +15,5 @@ void showHelp() {
     wgetch(hot_key);
     delwin(hot_key);
 }
+
+

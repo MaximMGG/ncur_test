@@ -6,6 +6,7 @@
 #include "../headers/dirwork.h"
 #include "../headers/util.h"
 #include "../headers/help.h"
+#include "../headers/dirfunc.h"
 
 
 
@@ -59,6 +60,17 @@ int main() {
                 break;
             //(TODO) (maxim) here need to implement functional, ditails in -notes 
             case 'c':
+                halfdelay(200);
+                ch = wgetch(main->win);
+                if (ch == 'b') {
+                    if (main->copy_buf_on == true) {
+                        main->copy_buf_on = false;    
+                        print_change_bufmode(main->win, true);
+                    } else {
+                        main->copy_buf_on = true;    
+                        print_change_bufmode(main->win, false);
+                    }
+                }
                 break;
             //(TODO) (Maxim) here will be some command line
             case ':':

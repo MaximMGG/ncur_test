@@ -1,5 +1,6 @@
 #include <ncurses.h>
 #include <ar_list.h>
+#include "dirfunc.h"
 
 
 #define CURS '>'
@@ -16,6 +17,9 @@ typedef struct w_win {
     int cursory;
     int cursorx;
     char *cur_dir;
+
+    boolean copy_buf_on;
+    copyBuf *copy_buf;
 }W_WIN;
 
 

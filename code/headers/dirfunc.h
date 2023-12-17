@@ -14,6 +14,10 @@ typedef struct {
     unsigned int maxx;
 } M_WIN;
 
+M_WIN *initdir();
 
+void setpath(M_WIN *win, char *path);
+
+void destroydir(M_WIN *win);
 
 #endif //_DIR_FUNC_

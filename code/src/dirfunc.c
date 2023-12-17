@@ -5,7 +5,6 @@
 
 M_WIN *initdir() {
     M_WIN *win = malloc(sizeof(M_WIN));
-    win->list = malloc(sizeof(D_LIST));
     win->list = create_dirlist();
     win->win = stdscr;
     getmaxyx(stdscr, win->maxy, win->maxx);

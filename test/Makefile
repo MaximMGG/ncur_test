@@ -1,59 +1,25 @@
-win: test.o
-	gcc -o win test.o -lncurses
-test.o: test.c
-	gcc -c test.o test.c 
+LIB = -lncurses -lncursesw
 
-exam: example.o
-	gcc -o exam example.o -lncurses
-example.o: example.c
-	gcc -c example.o example.c
+OBJ_DIR = ../code/obj/
+SRC_DIR = ../code/src/
 
-test2: test2.o
-	gcc -o test2 test2.o -lncurses
-test2.o: test2.c
-	gcc -c test2.o test2.c
+ALL = dirfunc
 
-window: window.o
-	gcc -o window window.o -lncurses
-window.o: window.c
-	gcc -c window.o window.c
+SRC = $(SRC_DIR)dirfunc.c $(SRC_DIR)dirlist.c
+OBJ = $(patsubst $(SRC_DIR)%.c, $(OBJ_DIR)%.o, $(SRC))
 
-window2: window2.o
-	gcc -o window2 window2.o -lncurses
-window2.o: window2.c
-	gcc -c window2.o window2.c
+TEST_SRC = $(wildcard *.c)
+TEST_OBJ = $(patsubst %.c, %.o, $(TEST_SRC))
 
-color: color.o
-	gcc -o color color.o -lncurses
-color.o: color.c
-	gcc -c color.o color.c
+dirfunc: $(TEST_OBJ) $(OBJ)
+	gcc -o $@ $^ $(LIB)
 
-key: key.o
-	gcc -o key key.o -lncurses
-key.o: key.c
-	gcc -c key.o key.c
+$(OBJ_DIR)%.o: $(SRC_DIR)%.c
+	gcc -o $@ -c $^ $(LIB)
 
-mouse: mouse.o
-	gcc -o mouse mouse.o -lncurses
-mouse.o: mouse.c
-	gcc -c mouse.o mouse.c
+%.o: %.c
+	gcc -o $@ -c $^ $(LIB)
 
-exit: exit.o
-	gcc -o exit exit.o -lncurses
-exit.o: exit.c
-	gcc -c exit.o exit.c
-
-symbols: symbols.o
-	gcc -o symbols symbols.o -lncurses
-symbols.o: symbols.c
-	gcc -c symbols.o symbols.c
-
-panel: panel.o
-	gcc -o panel panel.o -lncurses -lpanel
-panel.o: panel.c
-	gcc -c panel.o panel.c
-
-
-
-
+clear: 
+	rm *.o $(ALL)
 

@@ -1,5 +1,6 @@
 #include "../headers/dirfunc.h"
 #include <stdlib.h>
+#include <string.h>
 
 
 
@@ -16,10 +17,15 @@ M_WIN *initdir() {
 }
 
 void setpath(M_WIN *win, char *path) {
-
+    if (win->path == NULL) {
+        win->path = malloc(sizeof(char) * strlen(path));
+        strcpy(win->path, path);
+    }
 }
 
 void destroydir(M_WIN *win) {
     free(win->list);
+    free(win->path);
     free(win);
+    win = NULL;
 }

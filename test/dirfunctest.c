@@ -3,6 +3,7 @@
 #include <ncurses.h>
 #include <assert.h>
 #include <stdlib.h>
+#include <string.h>
 
 
 void initdirtest() {
@@ -17,11 +18,21 @@ void initdirtest() {
 }
 
 void setpathtest() {
+    M_WIN *win = initdir();
+    char *path = "/home/wawa/.local/share";
+    setpath(win, path);
 
+    assert(!(strcmp(path, win->path)));
+
+    free(win->list);
+    free(win->path);
+    free(win);
 }
 
 void destroydirtest() {
-
+    M_WIN *win = initdir();
+    destroydir(win);
+    assert(win == NULL);
 }
 
 int main() {
@@ -32,22 +43,22 @@ int main() {
 
     puts("START DIRFUNC TEST");
     teststart = clock();
-    puts("initdir func test");
+    puts("<initdir> func test");
     initdirtest();
     testend = clock();
-    printf("initdir func test -> success time -> %ld ms\n", (testend - teststart));
+    printf("<initdir> func test -> success time -> %ld ms\n", (testend - teststart));
     puts("========================================================");
     teststart = clock();
-    puts("setpath func test");
+    puts("<setpath> func test");
     setpathtest();
     testend = clock();
-    printf("setpath func test -> success, time -> %ld ms\n", (testend - teststart));
+    printf("<setpath> func test -> success, time -> %ld ms\n", (testend - teststart));
     puts("========================================================");
     teststart = clock();
-    puts("destroydir func test");
+    puts("<destroydir> func test");
     destroydirtest();
     testend = clock();
-    printf("destroydir func test -> success, time -> %ld ms\n", (testend - teststart));
+    printf("<destroydir> func test -> success, time -> %ld ms\n", (testend - teststart));
 
 
     testend = clock();

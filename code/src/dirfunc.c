@@ -23,9 +23,10 @@ void setpath(M_WIN *win, char *path) {
     }
 }
 
-void destroydir(M_WIN *win) {
+M_WIN *destroydir(M_WIN *win) {
     free(win->list);
     free(win->path);
     free(win);
     win = NULL;
+    return win;
 }

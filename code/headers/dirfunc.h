@@ -18,6 +18,6 @@ M_WIN *initdir();
 
 void setpath(M_WIN *win, char *path);
 
-void destroydir(M_WIN *win);
+M_WIN *destroydir(M_WIN *win);
 
 #endif //_DIR_FUNC_

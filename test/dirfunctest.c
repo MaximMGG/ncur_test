@@ -31,7 +31,7 @@ void setpathtest() {
 
 void destroydirtest() {
     M_WIN *win = initdir();
-    destroydir(win);
+    win = destroydir(win);
     assert(win == NULL);
 }
 

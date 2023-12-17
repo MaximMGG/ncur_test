@@ -13,12 +13,15 @@ TEST_OBJ = $(patsubst %.c, %.o, $(TEST_SRC))
 
 dirfunc: $(TEST_OBJ) $(OBJ)
 	gcc -o $@ $^ $(LIB)
+	
+debugdirfunc: $(TEST_SRC) $(SRC)
+	gcc -o $@ $^ $(LIB) -g
 
 $(OBJ_DIR)%.o: $(SRC_DIR)%.c
-	gcc -o $@ -c $^ $(LIB)
+	gcc -o $@ -c $^ $(LIB) -g
 
 %.o: %.c
-	gcc -o $@ -c $^ $(LIB)
+	gcc -o $@ -c $^ $(LIB) -g
 
 clear: 
 	rm *.o $(ALL)

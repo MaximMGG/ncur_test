@@ -35,6 +35,14 @@ void destroydirtest() {
     assert(win == NULL);
 }
 
+void getdircontenttest() {
+    M_WIN *win = initdir();
+    setpath(win, "/home/maximhrunenko/cprojects/note");
+    win->list = getdircontent(win);
+    assert(!(strcmp("..", win->list->files[1]->file_name)));
+    destroydir(win);
+}
+
 int main() {
 
     long start = clock();
@@ -59,6 +67,12 @@ int main() {
     destroydirtest();
     testend = clock();
     printf("<destroydir> func test -> success, time -> %ld ms\n", (testend - teststart));
+    puts("========================================================");
+    teststart = clock();
+    puts("<getdircontent> func test");
+    getdircontenttest();
+    testend = clock();
+    printf("<getdircontent> func test -> success, time -> %ld ms\n", (testend - teststart));
 
 
     testend = clock();

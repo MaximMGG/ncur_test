@@ -56,5 +56,7 @@ D_LIST *getdircontent(M_WIN *win) {
             }
         }
     }
+    closedir(dir);
+    free(dirr);
     return win->list;
 }

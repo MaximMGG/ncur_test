@@ -1,4 +1,5 @@
 #include "../headers/dirfunc.h"
+#include <ncurses.h>
 #include <unistd.h>
 #include <stdlib.h>
 
@@ -13,11 +14,13 @@ int main() {
     noecho();
     keypad(stdscr, TRUE);
     M_WIN *win = initdir();
+    curs_set(0);
 
     char *path = malloc(sizeof(char) * 200);
     getcwd(path, 200);
     setpath(win, path);
     box(win->win, 0, 0);
+    move(1, 1);
 
 
     while((ch = getch()) != KEY_F(1)) {

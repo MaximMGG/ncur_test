@@ -29,7 +29,6 @@ typedef struct copy_file {
 D_LIST *create_dirlist();
 void add_file(D_LIST *d_list, char l_type, char *l_file_name);
 
-
 void destroy_dirlist(D_LIST *list);
 
 

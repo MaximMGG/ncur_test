@@ -20,4 +20,6 @@ void setpath(M_WIN *win, char *path);
 
 M_WIN *destroydir(M_WIN *win);
 
+D_LIST *getdircontent(M_WIN *win);
+
 #endif //_DIR_FUNC_

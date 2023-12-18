@@ -12,6 +12,8 @@ typedef struct {
     unsigned int curx;
     unsigned int maxy;
     unsigned int maxx;
+
+    int from;
 } M_WIN;
 
 M_WIN *initdir();

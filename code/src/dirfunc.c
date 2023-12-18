@@ -15,6 +15,7 @@ M_WIN *initdir() {
     win->cury = 1;
     win->curx = 1;
     win->path = NULL;
+    win->from = 0;
 
     return win;
 }

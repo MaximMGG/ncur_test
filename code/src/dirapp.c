@@ -11,6 +11,7 @@ int main() {
 
     initscr();
     start_color();
+    initdirpair();
     raw();
     noecho();
     keypad(stdscr, TRUE);
@@ -23,14 +24,25 @@ int main() {
     box(win->win, 0, 0);
     move(1, 1);
     win->list = getdircontent(win);
+    mvaddch(1, 1, '>');
     showscreen(win);
 
     while((ch = getch()) != KEY_F(1)) {
         switch(ch) {
-
+            case 'j':
+            case KEY_DOWN: {
+                        curs_move(win, DOWN);    
+                        refresh();
+                        break;
+                 }
+            case 'k':
+            case KEY_UP: {
+                        curs_move(win, UP);    
+                        refresh();
+                        break;
+                 }
         }
     }
-
 
     endwin();
     return 0;
